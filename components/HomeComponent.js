@@ -46,10 +46,10 @@ class Home extends Component {
         
         return(
             <ScrollView>
+                {/* <Button onPress={() => this.props.navigation.toggleDrawer()} title="Toggle Drawer" /> */}
                 <RenderItem item={this.state.dishes.filter((dish) => dish.featured)[0]} />
                 <RenderItem item={this.state.promotions.filter((promo) => promo.featured)[0]} />
                 <RenderItem item={this.state.leaders.filter((leader) => leader.featured)[0]} />
-                <Button onPress={() => this.props.navigation.toggleDrawer()} title="Toggle Drawer" />
             </ScrollView>
         );
     }

@@ -1,3 +1,9 @@
+// Please Use Updated version of navigation plugins, Otherwise assignment may not work.
+// "@react-navigation/drawer": "^5.11.5",
+// "@react-navigation/native": "^5.9.0",
+// "@react-navigation/stack": "^5.13.0",
+// "react-native": "~0.63.4",
+// "react-native-elements": "^3.1.0",
 import React, { Component } from 'react';
 import Menu from './MenuComponent';
 import { DISHES } from '../shared/dishes';
@@ -7,7 +13,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from './HomeComponent';
-import { Icon } from 'react-native-elements';
+import About from './AboutComponent'
+import Contact from './ContactComponent'
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -41,6 +48,30 @@ function MenuNavigator(prop) {
     );
 }
 
+function AboutNavigator(prop) {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerStyle: {backgroundColor: '#512DA8'},
+            headerTintColor: '#fff',
+            headerTitleStyle: {color: '#fff'},
+        }}>
+            <Stack.Screen name="About" component={About} />
+        </Stack.Navigator>
+    );
+}
+
+function ContactNavigator(prop) {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerStyle: {backgroundColor: '#512DA8'},
+            headerTintColor: '#fff',
+            headerTitleStyle: {color: '#fff'},
+        }}>
+            <Stack.Screen name="Contact" component={Contact} options={{title: "About Us"}} />
+        </Stack.Navigator>
+    );
+}
+
 class Main extends Component {
     constructor(props) {
         super(props);
@@ -68,6 +99,8 @@ class Main extends Component {
                         options={{ title: 'Menu', drawerLabel: 'Menu'}}
                     >                        
                     </Drawer.Screen>
+                    <Drawer.Screen name="About" component={AboutNavigator} />
+                    <Drawer.Screen name="Contact" component={ContactNavigator} />                        
                 </Drawer.Navigator>
 
             </NavigationContainer>
