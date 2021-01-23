@@ -1,80 +1,90 @@
 import React, { Component } from 'react';
-import { View, Text, Image, FlatList, ScrollView } from 'react-native';
-import { Avatar, Card, ListItem } from 'react-native-elements';
+import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import { Card, ListItem } from 'react-native-elements';
 import { LEADERS } from '../shared/leaders';
 
+const ourHistory = [
+    `Started in 2010, Ristorante con Fusion quickly established itself as a culinary icon par excellence in Hong Kong. With its unique brand of world fusion cuisine that can be found nowhere else, it enjoys patronage from the A-list clientele in Hong Kong.  Featuring four of the best three-star Michelin chefs in the world, you never know what will arrive on your plate the next time you visit us.`,
+    `The restaurant traces its humble beginnings to The Frying Pan, a successful chain started by our CEO, Mr. Peter Pan, that featured for the first time the world's best cuisines in a pan.`
+];
 
-const History = () => {
-  return (
-    <Card
-      title={"Our History"}
-    >
-      <Text style={{margin: 10}}>Started in 2010, Ristorante con Fusion quickly 
-      established itself as a culinary icon par excellence in Hong Kong.
-        With its unique brand of world fusion cuisine that can be found nowhere else, 
-        it enjoys patronage from the A-list clientele in Hong Kong.  
-        Featuring four of the best three-star Michelin chefs in the world, 
-        you never know what will arrive on your plate the next time you visit us.
-      </Text>
-      <Text style={{margin: 10}}>The restaurant traces its humble beginnings
-        to The Frying Pan, a successful chain started by our CEO, Mr. Peter Pan,
-        that featured for the first time the world's best cuisines in a pan.
-        </Text>
-    </Card>
-  )
-}
-
-
-
-
-
-class About extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      leaders: LEADERS
+const RenderHistory = ({history}) => {    
+    if (Array.isArray(history) && history.length >=1) {
+        return(
+          <View>
+            {history.map( (PieceOfInfo, index) => (
+              <Text key={index} style={{margin: 10, fontWeight: 'bold'}}>
+                  {PieceOfInfo}
+              </Text> )
+            )}
+          </View>)
     }
+    return(<View></View>);
 }
+
+const RenderLeaders = ({leaders}) => {
+    if (Array.isArray(leaders) && leaders.length >=1) {
+        return(
+          <View>
+            { leaders.map((leader, index) => (
+              <ListItem
+              key={index}
+              title={leader.name}
+              subtitle={leader.description}
+              hideChevron={true}
+              leftAvatar={{source: require('./images/alberto.png')}}
+              />) 
+            ) }
+          </View>)
+    } 
+    return(<View></View>)
+}
+
+class Aboutus extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
     static navigationOptions = {
-        title: 'Contact'
+        headerStyle: {
+            backgroundColor: "#512DA8"
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            color: "#fff"            
+        }
     };
-    renderItem({item}) {
-
-        return (
-
-          <ListItem
-          leftAvatar={{ source: require('./images/alberto.png')} }
-          title={item.designation}
-          subtitle={item.description}
-          bottomDivider
-          />
-
-          
-        )
-    }
 
     render() {
+
+        const styles = StyleSheet.create({
+            hrStyle:{
+                borderWidth: 1,
+                borderColor:'lightgrey',
+                margin: 8 },
+            cardHeaderStyle:{
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: 20,
+                marginBottom: 5
+            }});
+
         return(
-
-          <ScrollView>
-            <History />
-            <Card
-                title={"Corporate Leadership"}
-              >
-                <FlatList
-                  keyExtractor={ldr => ldr.id}
-                  data={this.state.leaders}
-                  renderItem={this.renderItem}
-                />
+            <ScrollView>
+              <Card>
+                <Text style={styles.cardHeaderStyle}>Our History</Text>
+                <View style={styles.hrStyle} />
+                <RenderHistory history={ourHistory} />
               </Card>
-
-          </ScrollView>
-              
-
-
+              <Card>
+                <Text style={styles.cardHeaderStyle}>Corporate Leadership</Text>
+                <View style={styles.hrStyle} />
+                <RenderLeaders leaders={LEADERS}/>
+              </Card>
+            </ScrollView>
         );
     }
 }
 
-export default About;
+export default Aboutus;

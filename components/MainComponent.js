@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import { DISHES } from '../shared/dishes';
+import Home from './HomeComponent'
 import Menu from './MenuComponent';
-import Dishdetail from './DishdetailComponent';
-import { View, Platform } from 'react-native';
-import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
-import Home from './HomeComponent';
-import { Icon } from 'react-native-elements';
 import Contact from './ContactComponent';
-import About from './AboutComponent';
+import Aboutus from './AboutComponent';
+import { DISHES } from '../shared/dishes';
+import DishDetail from './DishDetailComponent';
+import { View, Platform } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+// import { Icon } from 'react-native-elements';
 
-const HomeNavigator = createStackNavigator({
-  Home: { screen: Home }
-}, {
-  navigationOptions: ({ navigation }) => ({
+
+const HomeNavigator = createStackNavigator( {
+    Home: { screen: Home }
+},
+{  navigationOptions: ({ navigation }) => ({
     headerStyle: {
         backgroundColor: "#512DA8"
     },
@@ -20,119 +23,79 @@ const HomeNavigator = createStackNavigator({
         color: "#fff"            
     },
     headerTintColor: "#fff"  
-  })
+    })
 });
-const ContactNavigator = createStackNavigator({
-  Contact: { screen: Contact }
-}, {
-  navigationOptions: ({ navigation }) => ({
-    headerStyle: {
-        backgroundColor: "#512DA8"
-    },
-    headerTitleStyle: {
-        color: "#fff"            
-    },
-    headerTintColor: "#fff"  
-  })
-});
+
 const AboutNavigator = createStackNavigator({
-  About: { screen: About }
-}, {
-  navigationOptions: ({ navigation }) => ({
-    headerStyle: {
-        backgroundColor: "#512DA8"
-    },
-    headerTitleStyle: {
-        color: "#fff"            
-    },
-    headerTintColor: "#fff"  
-  })
+    About: { screen: Aboutus }
 });
 
-
-const MenuNavigator = createStackNavigator(
+const MenuNavigator = createStackNavigator( {
+    Menu: { screen: Menu },
+    DishDetail: { screen: DishDetail }
+},
 {
-  Menu: {screen: Menu},
-  Dishdetail: {screen: Dishdetail},
-  Home: {screen: Home}
-}, 
-{
-  initialRouteName: 'Menu',
-  navigationOptions: {
-    headerStyle: {
-      backgroundColor: "#512DA8"
-    },
-    headerTintColor: "#fff",
-    headerTitleStyle: {
-      color: "#fff" 
-    }
-  }
+    initialRouteName: 'Menu',
+});
 
-})
+const ContactNavigator = createStackNavigator({
+    Contact: { screen: Contact }
+});
 
-
-const MainNavigator = createDrawerNavigator(
-  {
+const MainNavigator = createAppContainer(createDrawerNavigator({
     Home: 
-    {
-      screen: HomeNavigator,
-      navigationOptions: {
-        title: "Home",
-        drawerlabel: "Home"
-      }
-    },
+      { screen: HomeNavigator,
+        navigationOptions: {
+          title: 'Home',
+          drawerLabel: 'Home'
+        }
+      },
+    Aboutus: 
+      { screen: AboutNavigator,
+        navigationOptions: {
+          title: 'About us',
+          drawerLabel: 'About us'
+        }
+      },
     Menu: 
-    {
-      screen: MenuNavigator,
-      navigationOptions: {
-        title: 'Menu',
-        drawerLabel: 'Menu'
-      }
-    },
+      { screen: MenuNavigator,
+        navigationOptions: {
+          title: 'Menu',
+          drawerLabel: 'Menu'
+        }
+      },
     Contact: 
-    {
-      screen: ContactNavigator,
-      navigationOptions: {
-        title: 'Contact',
-        drawerLabel: 'Contact'
+      { screen: ContactNavigator,
+        navigationOptions: {
+          title: 'Contact us',
+          drawerLabel: 'Contact us'
+        }
       }
-    },
-    About: 
-    {
-      screen: AboutNavigator,
-      navigationOptions: {
-        title: 'About Us',
-        drawerLabel: 'About Us'
-      }
-    },
-      
-  },
-  {drawerBackgroundColor: '#D1C4E9'}
-);
+}, { drawerBackgroundColor: '#D1C4E9' }));
+
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dishes: DISHES,
-      selectedDish:null,
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            dishes: DISHES,
+            selectedDish: null
+        };
+    }
 
-  onDishSelect(dishId) {
-    this.setState({selectedDish: dishId}); 
-  }
+    onDishSelect(dishId) {
+        this.setState({
+            selectedDish: dishId
+        })
+    }
 
-  render() {
- 
-    return (
-        <View style={{flex:1}}>
-          {/* <Menu dishes={this.state.dishes} onPress={dishId =>this.onDishSelect(dishId)} />
-          <Dishdetail dish={this.state.dishes.filter(dish => dish.id === this.state.selectedDish)[0]} /> */}
-          <MainNavigator />
+    render() {
+        return ( 
+        <View style={{flex:1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
+            <MainNavigator />
         </View>
-    );
-  }
+        );
+    }
 }
-  
+
 export default Main;
