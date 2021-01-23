@@ -5,16 +5,15 @@
 // "react-native": "~0.63.4",
 // "react-native-elements": "^3.1.0",
 import React, { Component } from 'react';
-import Menu from './MenuComponent';
-import { DISHES } from '../shared/dishes';
-import Dishdetail from './DishdetailComponent';
 import { Button, Text, View, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from './HomeComponent';
 import About from './AboutComponent'
+import Menu from './MenuComponent';
 import Contact from './ContactComponent'
+import Dishdetail from './DishdetailComponent';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -55,7 +54,7 @@ function AboutNavigator(prop) {
             headerTintColor: '#fff',
             headerTitleStyle: {color: '#fff'},
         }}>
-            <Stack.Screen name="About" component={About} />
+            <Stack.Screen name="About" component={About} options={{title: "About Us"}} />
         </Stack.Navigator>
     );
 }
@@ -67,22 +66,13 @@ function ContactNavigator(prop) {
             headerTintColor: '#fff',
             headerTitleStyle: {color: '#fff'},
         }}>
-            <Stack.Screen name="Contact" component={Contact} options={{title: "About Us"}} />
+            <Stack.Screen name="Contact" component={Contact} options={{title: "Contact Us"}} />
         </Stack.Navigator>
     );
 }
 
 class Main extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            dishes: DISHES,
-            selectedDish: null
-        };
-    }
-    onDishSelect(dishId) {
-        this.setState({selectedDish: dishId})
-    }
+
     render() {
  
         return (
@@ -99,8 +89,8 @@ class Main extends Component {
                         options={{ title: 'Menu', drawerLabel: 'Menu'}}
                     >                        
                     </Drawer.Screen>
-                    <Drawer.Screen name="About" component={AboutNavigator} />
-                    <Drawer.Screen name="Contact" component={ContactNavigator} />                        
+                    <Drawer.Screen name="About" component={AboutNavigator} options={{ title: 'About Us', drawerLabel: 'About Us'}} />
+                    <Drawer.Screen name="Contact" component={ContactNavigator} options={{ title: 'Contact Us', drawerLabel: 'Contact Us'}} />                        
                 </Drawer.Navigator>
 
             </NavigationContainer>

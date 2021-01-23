@@ -13,6 +13,7 @@ function History() {
   return (
     <Card>
         <Card.Title>Our History</Card.Title>
+        <Card.Divider />
         <Text style={{margin: 10}}>
         Started in 2010, Ristorante con Fusion quickly established itself as a
         culinary icon par excellence in Hong Kong. With its unique brand of
@@ -56,7 +57,7 @@ export class About extends Component {
     const {navigate} = this.props.navigation
 
     return (
-      <ScrollView>
+      <>
         <History />
         <Card>
             <Card.Title style={{borderBottom: '1px solid #ddd'}}>Corporate Leadership</Card.Title>
@@ -66,7 +67,7 @@ export class About extends Component {
                 keyExtractor={item => item.id.toString()}
             />
         </Card>
-      </ScrollView>
+      </>
     )
   }
 }
