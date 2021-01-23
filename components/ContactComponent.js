@@ -1,40 +1,30 @@
-// Please Use Updated version of navigation plugins, Otherwise assignment may not work.
-// "@react-navigation/drawer": "^5.11.5",
-// "@react-navigation/native": "^5.9.0",
-// "@react-navigation/stack": "^5.13.0",
-// "react-native": "~0.63.4",
-// "react-native-elements": "^3.1.0",
-import React, {Component} from 'react'
-import {Card} from 'react-native-elements'
-import {Text} from 'react-native'
+import React, { Component } from 'react'
+import { Text, View } from 'react-native'
+import { Card } from 'react-native-elements';
 
-export class Contact extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+export default class Contact extends Component {
 
-  render() {
-    return (
-      <Card>
-        <Card.Title>Contact Information</Card.Title>
-          
-        <Text>
-          {`121, Clear Water Bay Road
+    static navigationOptions = {
+        title: 'Contact Us'
+    };
 
+    render() {
+
+        return (
+            <View>
+                <Card>
+                    <Card.Title style={{ fontWeight: 'bold', fontSize: 15 }}>Contact Information</Card.Title>
+                    <Card.Divider /> 
+                    <Text style={{ margin: 10, lineHeight: 35, fontSize: 14 }}>
+              {`121, Clear Water Bay Road
 Clear Water Bay, Kowloon
-
 HONG KONG
-
 Tel: +852 1234 5678
-
 Fax: +852 8765 4321
-
 Email:confusion@food.net`}
-        </Text>
-      </Card>
-    )
-  }
+            </Text>
+                </Card>
+            </View>
+        )
+    }
 }
-
-export default Contact
