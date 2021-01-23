@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { Card } from 'react-native-elements';
 import { DISHES } from '../shared/dishes';
 
@@ -44,9 +44,12 @@ class Dishdetail extends Component {
 
     render() {
         console.log('this.props', this.props);
-        const {dishId} = this.props.route.params;
+        const {dishId} = this.props.route.params || {dishId: 0};
         return(
-            <RenderDish dish={this.state.dishes[+dishId]} />
+            <View>
+                <RenderDish dish={this.state.dishes[+dishId]} />
+                <Button style={{margin: 10}} onPress={() => this.props.navigation.toggleDrawer()} title="Toggle Drawer" />
+            </View>
         );
     }
 }
