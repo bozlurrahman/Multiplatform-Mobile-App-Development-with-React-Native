@@ -5,10 +5,11 @@
 // "react-native": "~0.63.4",
 // "react-native-elements": "^3.1.0",
 import React, { Component } from 'react';
-import { Button, Text, View, Platform } from 'react-native';
+import { Button, Image, Text, View, Platform, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Icon } from 'react-native-elements';
 import Home from './HomeComponent';
 import About from './AboutComponent'
 import Menu from './MenuComponent';
@@ -17,8 +18,19 @@ import Dishdetail from './DishdetailComponent';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+function LogoTitle(props) {
+    console.log('props::', props);
+    return (
+        <TouchableOpacity  activeOpacity = { .5 } onPress={ props.toggleTheDwawer }>
+            <Image style={{ width: 50, height: 50 }}
+                source={require('./images/logo.png')}
+            />
+        </TouchableOpacity>
+    );
+}
+function HomeNavigator({navigation}) {
+    const toggleTheDwawer = () => navigation.toggleDrawer()
 
-function HomeNavigator(prop) {
     return (
         <Stack.Navigator initialRouteName="Home" screenOptions={{
             headerStyle: {backgroundColor: "#512DA8"},
@@ -26,10 +38,14 @@ function HomeNavigator(prop) {
             headerTintColor: "#fff"  
         }}>
             <Stack.Screen name="Home" component={Home}
-                options={{ title: 'Home', drawerLabel: 'Home'}}
+                options={ ({navigation}) => ({ 
+                    title: 'Home', drawerLabel: 'Home', 
+                    headerLeft: () => <LogoTitle toggleTheDwawer={toggleTheDwawer} />,
+                    headerRight: () => (
+                        <Button onPress={() => toggleTheDwawer()} title="Toggle Dwawer" />
+                    )
+                })}
             />
-            {/* <Stack.Screen name="Menu" component={Menu} options={{ dishes: dishes, title: 'Main Menu' }} /> */}
-            {/* <Stack.Screen name="Dishdetail" component={Dishdetail} options={{ dishes: dishes, onPress: onPress }} /> */}
         </Stack.Navigator>
     );
 }
