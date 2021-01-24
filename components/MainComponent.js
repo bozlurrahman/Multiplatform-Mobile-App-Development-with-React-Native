@@ -47,6 +47,7 @@ function MenuNavigator(prop) {
         }}>
             <Stack.Screen name="Menu" component={Menu} 
                 options={ ({navigation}) => ({  
+                    title: 'Dish Details', drawerLabel: 'Dish Details', 
                     headerLeft: () => <Icon name="menu" size={24} color= 'white'
                         onPress={ () => navigation.toggleDrawer() } />,                      
                     }) 
