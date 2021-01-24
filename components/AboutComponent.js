@@ -8,6 +8,14 @@ import React, {Component} from 'react'
 import {ScrollView, FlatList, Text} from 'react-native'
 import {Avatar, Card, ListItem} from 'react-native-elements'
 import {LEADERS} from '../shared/leaders'
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+  return {
+    leaders: state.leaders
+  }
+}
 
 function History() {
   return (
@@ -45,7 +53,7 @@ export class About extends Component {
     const renderLeaderItem = ({item, index}) => {
       return (        
         <ListItem key={index} >
-            <Avatar source={ require('./images/alberto.png') } />
+            <Avatar source={{ url: ( baseUrl + item.image )} } />
             <ListItem.Content>
                 <ListItem.Title>{item.name}</ListItem.Title>
                 <ListItem.Subtitle>{item.description}</ListItem.Subtitle>
@@ -63,7 +71,7 @@ export class About extends Component {
             <Card.Title>Corporate Leadership</Card.Title>
             <Card.Divider />
             <FlatList
-                data={this.state.leaders}
+                data={this.props.leaders.leaders}
                 renderItem={renderLeaderItem}
                 keyExtractor={item => item.id.toString()}
             />
@@ -73,4 +81,4 @@ export class About extends Component {
   }
 }
 
-export default About
+export default connect(mapStateToProps)(About);
