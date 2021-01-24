@@ -18,19 +18,8 @@ import Dishdetail from './DishdetailComponent';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-function LogoTitle(props) {
-    console.log('props::', props);
-    return (
-        <TouchableOpacity  activeOpacity = { .5 } onPress={ props.toggleTheDwawer }>
-            <Image style={{ width: 50, height: 50 }}
-                source={require('./images/logo.png')}
-            />
-        </TouchableOpacity>
-    );
-}
-function HomeNavigator({navigation}) {
-    const toggleTheDwawer = () => navigation.toggleDrawer()
 
+function HomeNavigator({navigation}) {
     return (
         <Stack.Navigator initialRouteName="Home" screenOptions={{
             headerStyle: {backgroundColor: "#512DA8"},
@@ -40,11 +29,9 @@ function HomeNavigator({navigation}) {
             <Stack.Screen name="Home" component={Home}
                 options={ ({navigation}) => ({ 
                     title: 'Home', drawerLabel: 'Home', 
-                    headerLeft: () => <LogoTitle toggleTheDwawer={toggleTheDwawer} />,
-                    headerRight: () => (
-                        <Button onPress={() => toggleTheDwawer()} title="Toggle Dwawer" />
-                    )
-                })}
+                    headerLeft: () => <Icon name="menu" size={24} color= 'white'
+                        onPress={ () => navigation.toggleDrawer() } />,                      
+                }) }
             />
         </Stack.Navigator>
     );

@@ -48,7 +48,6 @@ class Dishdetail extends Component {
         return(
             <View>
                 <RenderDish dish={this.state.dishes[+dishId]} />
-                <Button style={{margin: 10}} onPress={() => this.props.navigation.toggleDrawer()} title="Toggle Drawer" />
             </View>
         );
     }

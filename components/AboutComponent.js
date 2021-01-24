@@ -57,17 +57,18 @@ export class About extends Component {
     const {navigate} = this.props.navigation
 
     return (
-      <>
+      <ScrollView>
         <History />
         <Card>
-            <Card.Title style={{borderBottom: '1px solid #ddd'}}>Corporate Leadership</Card.Title>
+            <Card.Title>Corporate Leadership</Card.Title>
+            <Card.Divider />
             <FlatList
                 data={this.state.leaders}
                 renderItem={renderLeaderItem}
                 keyExtractor={item => item.id.toString()}
             />
         </Card>
-      </>
+      </ScrollView>
     )
   }
 }
