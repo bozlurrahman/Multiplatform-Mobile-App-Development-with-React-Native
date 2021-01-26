@@ -52,7 +52,7 @@ export class About extends Component {
             // return;
         return (        
             <ListItem key={item.id} >
-                <Avatar source={{ url: ( baseUrl + item.image )}} />
+                <Avatar source={{ uri: ( baseUrl + item.image )}} />
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>
                     <ListItem.Subtitle>{item.description}</ListItem.Subtitle>
