@@ -62,10 +62,10 @@ function RenderComments(props) {
 
     const comments = props.comments;
             
-    const renderCommentItem = ({item, index}) => {
+    const renderCommentItem = (item) => {
         
         return (
-            <View key={index} style={{margin: 10}}>
+            <View key={item.id} style={{margin: 10}}>
                 <Text style={{fontSize: 14}}>{item.comment}</Text>
                 {/* <Text style={{fontSize: 12}}>{item.rating} Stars</Text> */}
                 <Rating imageSize={10} readonly startingValue={parseInt(item.rating)} style={StyleSheet.flatten(styles.rating)} />
@@ -77,11 +77,12 @@ function RenderComments(props) {
     return (
         <Card>
             <Card.Title>Comments</Card.Title>
-            <FlatList 
+            {comments.map(renderCommentItem)}
+            {/* <FlatList 
                 data={comments}
                 renderItem={renderCommentItem}
                 keyExtractor={item => item.id.toString()}
-                />
+                /> */}
         </Card>
     );
 }
