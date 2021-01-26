@@ -5,7 +5,7 @@
 // "react-native": "~0.63.4",
 // "react-native-elements": "^3.1.0",
 import React, {Component} from 'react'
-import {ScrollView, FlatList, Text} from 'react-native'
+import {ScrollView, FlatList, Text, VirtualizedList} from 'react-native'
 import {Avatar, Card, ListItem} from 'react-native-elements'
 import {LEADERS} from '../shared/leaders'
 import { connect } from 'react-redux';
@@ -45,12 +45,14 @@ export class About extends Component {
             leaders: LEADERS,
         }
     }
-
+ 
   render() {
-        const renderLeaderItem = ({item, index}) => {
+        const renderLeaderItem = (item) => {
+            // console.log('item   lll: ', item);
+            // return;
         return (        
-            <ListItem key={index} >
-                <Avatar source={{ url: ( baseUrl + item.image )} } />
+            <ListItem key={item.id} >
+                <Avatar source={{ url: ( baseUrl + item.image )}} />
                 <ListItem.Content>
                     <ListItem.Title>{item.name}</ListItem.Title>
                     <ListItem.Subtitle>{item.description}</ListItem.Subtitle>
@@ -89,11 +91,19 @@ export class About extends Component {
             <Card>
                 <Card.Title>Corporate Leadership</Card.Title>
                 <Card.Divider />
-                <FlatList
+                {this.props.leaders.leaders.map(renderLeaderItem)}
+                {/* <FlatList
                     data={this.props.leaders.leaders}
                     renderItem={renderLeaderItem}
                     keyExtractor={item => item.id.toString()}
-                />
+                /> */}
+                {/* <VirtualizedList
+                    data={this.props.leaders.leaders}
+                    renderItem={renderLeaderItem}
+                    keyExtractor={item => item.id.toString()}
+                    getItemCount={() => this.props.leaders.leaders.length}
+                    getItem={(data, index) => data[index]}
+                /> */}
             </Card>
             </ScrollView>
         )
