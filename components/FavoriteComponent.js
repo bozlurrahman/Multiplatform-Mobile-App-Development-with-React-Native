@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Animated, StyleSheet, FlatList, View, Text } from 'react-native';
 import {Avatar, Card, ListItem} from 'react-native-elements';
 import { connect } from 'react-redux';
+import * as Animatable from 'react-native-animatable';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 import { deleteFavorite } from '../redux/ActionCreators';
@@ -62,6 +63,7 @@ class Favorites extends Component {
             };
 
             return (
+                <Animatable.View animation="fadeInRightBig" duration={2000}> 
                 <Swipeable renderRightActions={rightButton}>
                 <ListItem key={item.id} onPress={() => navigate('Dishdetail', { dishId: item.id })}>
                     <Avatar source={{ uri: ( baseUrl + item.image )}} />
@@ -71,6 +73,7 @@ class Favorites extends Component {
                     </ListItem.Content>
                 </ListItem>
                 </Swipeable>
+                </Animatable.View>
             );
         };
 

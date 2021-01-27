@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList, Modal, StyleSheet, Button } from 'react-native';
 import {Card, Icon, Rating, Input} from 'react-native-elements'
+import * as Animatable from 'react-native-animatable';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { connect } from 'react-redux';
@@ -30,6 +31,7 @@ const RenderDish = props => {
     
         if (dish != null) {
             return(
+                <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
                 <Card>
                     <Card.Title>{dish.name}</Card.Title>
                     {/* <Card.Image source={require( './'+ DISHES.filter(function(dis){return dish.id == dis.id})[0].image )} /> */}
@@ -51,6 +53,7 @@ const RenderDish = props => {
                         />
                     </View>
                 </Card>
+                </Animatable.View>
             );
         }
         else {
@@ -75,6 +78,7 @@ function RenderComments(props) {
     };
     
     return (
+        <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
         <Card>
             <Card.Title>Comments</Card.Title>
             {comments.map(renderCommentItem)}
@@ -84,6 +88,7 @@ function RenderComments(props) {
                 keyExtractor={item => item.id.toString()}
                 /> */}
         </Card>
+        </Animatable.View>
     );
 }
 
