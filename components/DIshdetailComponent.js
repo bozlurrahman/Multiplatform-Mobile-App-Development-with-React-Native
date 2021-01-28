@@ -108,15 +108,19 @@ function RenderComments(props) {
             </View>
         );
     };
+            
+    const FlatListrenderCommentItem = ({item}) => {
+        return (renderCommentItem(item));
+    };
     
     return (
-        <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+        <Animatable.View animation="fadeInUp" duration={2000} delay={1000}>
         <Card>
             <Card.Title>Comments</Card.Title>
             {comments.map(renderCommentItem)}
             {/* <FlatList 
                 data={comments}
-                renderItem={renderCommentItem}
+                renderItem={FlatListrenderCommentItem}
                 keyExtractor={item => item.id.toString()}
                 /> */}
         </Card>
@@ -128,13 +132,15 @@ function RenderComments(props) {
 class Dishdetail extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-            dishes: DISHES,
-            comments: COMMENTS,
-            favorites: [], 
-            showModal: false,
-        };
+          showModal: false,
+          rating: 5,
+          author: '',
+          comment: '',
+        }
+        this.handleRating = this.handleRating.bind(this)
+        this.handleComment = this.handleComment.bind(this)
     }
 
     markFavorite(dishId) {
@@ -167,7 +173,7 @@ class Dishdetail extends Component {
         return(
             <ScrollView>
                 <RenderDish dish={this.props.dishes.dishes[+dishId]}
-                    favorite={this.state.favorites.some(el => el === dishId)}
+                    favorite={this.props.favorites.some(el => el === dishId)}
                     onPress={() => this.markFavorite(dishId)}
                     toggleModal={() => this.toggleModal()}
                     favorite={this.props.favorites.some(el => el === dishId)}
