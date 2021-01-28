@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 import Reservation from './ReservationComponent';
 import Favorites from './FavoriteComponent';
+import Login from './LoginComponent';
 
 const mapStateToProps = state => {
   return {
@@ -151,6 +152,23 @@ function FavoritesNavigator(prop) {
     );
 }
 
+function LoginNavigator(prop) {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerStyle: {backgroundColor: '#512DA8'},
+            headerTintColor: '#fff',
+            headerTitleStyle: {color: '#fff'},
+        }}>
+            <Stack.Screen name="Login" component={Login}
+                options={ ({navigation}) => ({ 
+                    title: 'Login', 
+                    headerLeft: () => <Icon name="menu" size={24} color= 'white'
+                        onPress={ () => navigation.toggleDrawer() } />,                      
+                }) }
+            />
+        </Stack.Navigator>
+    );
+}
 
 function CustomDrawerContentComponent({ progress, ...rest }) {
     const translateX = Animated.interpolate(progress, {
@@ -198,6 +216,10 @@ class Main extends Component {
                     drawerStyle={{backgroundColor: '#D1C4E9'}}
                     screenOptions={{ drawerBackgroundColor: '#D1C4E9'}}
                     drawerContent={props => <CustomDrawerContentComponent {...props} />} >
+                    <Drawer.Screen name="Login" component={LoginNavigator} options={{ 
+                        title: 'Login', drawerLabel: 'Login',
+                        drawerIcon: ({tintColor}) => ( <Icon name="sign-in" type="font-awesome" size={22} color={tintColor} />)
+                    }} />                     
                     <Drawer.Screen name="Home" component={HomeNavigator}
                         options={{ 
                             title: 'Home', drawerLabel: 'Home',
@@ -227,7 +249,7 @@ class Main extends Component {
                     <Drawer.Screen name="Reservation" component={ReservationNavigator} options={{ 
                         title: 'Reserve Table', drawerLabel: 'Reserve Table',
                         drawerIcon: ({tintColor}) => ( <Icon name='cutlery' type='font-awesome' size={24} iconStyle={{ color: tintColor }} />)
-                    }} />                       
+                    }} />    
                 </Drawer.Navigator>
 
             </NavigationContainer>
