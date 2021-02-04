@@ -38,135 +38,141 @@ const mapDispatchToProps = dispatch => ({
   fetchLeaders: () => dispatch(fetchLeaders()),
 })
 
-const Stack = createStackNavigator();
+const HomeStack = createStackNavigator();
+const MenuStack = createStackNavigator();
+const AboutStack = createStackNavigator();
+const ContactStack = createStackNavigator();
+const ReservationStack = createStackNavigator();
+const FavoritesStack = createStackNavigator();
+const LoginStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function HomeNavigator({navigation}) {
     return (
-        <Stack.Navigator initialRouteName="Home" screenOptions={{
+        <HomeStack.Navigator initialRouteName="Home" screenOptions={{
             headerStyle: {backgroundColor: "#512DA8"},
             headerTitleStyle: {color: "#fff"},
             headerTintColor: "#fff"  
         }}>
-            <Stack.Screen name="Home" component={Home}
+            <HomeStack.Screen name="Home" component={Home}
                 options={ ({navigation}) => ({ 
                     title: 'Home', drawerLabel: 'Home', 
                     headerLeft: () => <Icon name="menu" size={24} color= 'white'
                         onPress={ () => navigation.toggleDrawer() } />,                      
                 }) }
             />
-        </Stack.Navigator>
+        </HomeStack.Navigator>
     );
 }
 
 function MenuNavigator(prop) {
     return (
-        <Stack.Navigator initialRouteName="Menu" screenOptions={{
+        <MenuStack.Navigator initialRouteName="Menu" screenOptions={{
             headerStyle: {backgroundColor: '#512DA8'},
             headerTintColor: '#fff',
             headerTitleStyle: {color: '#fff'},
         }}>
-            <Stack.Screen name="Menu" component={Menu} 
+            <MenuStack.Screen name="Menu" component={Menu} 
                 options={ ({navigation}) => ({  
                     headerLeft: () => <Icon name="menu" size={24} color= 'white'
                         onPress={ () => navigation.toggleDrawer() } />,                      
                     }) 
                 }
             />
-            <Stack.Screen name="Dishdetail" component={Dishdetail} options={{
+            <MenuStack.Screen name="Dishdetail" component={Dishdetail} options={{
                 title: 'Dish Details', drawerLabel: 'Dish Details', 
             }}/>
-        </Stack.Navigator>
+        </MenuStack.Navigator>
     );
 }
 
 function AboutNavigator(prop) {
     return (
-        <Stack.Navigator screenOptions={{
+        <AboutStack.Navigator screenOptions={{
             headerStyle: {backgroundColor: '#512DA8'},
             headerTintColor: '#fff',
             headerTitleStyle: {color: '#fff'},
         }}>
-            <Stack.Screen name="About" component={About}
+            <AboutStack.Screen name="About" component={About}
                 options={ ({navigation}) => ({ 
                     title: 'About Us', 
                     headerLeft: () => <Icon name="menu" size={24} color= 'white'
                         onPress={ () => navigation.toggleDrawer() } />,                      
                 }) }
             />
-        </Stack.Navigator>
+        </AboutStack.Navigator>
     );
 }
 
 function ContactNavigator(prop) {
     return (
-        <Stack.Navigator screenOptions={{
+        <ContactStack.Navigator screenOptions={{
             headerStyle: {backgroundColor: '#512DA8'},
             headerTintColor: '#fff',
             headerTitleStyle: {color: '#fff'},
         }}>
-            <Stack.Screen name="Contact" component={Contact}
+            <ContactStack.Screen name="Contact" component={Contact}
                 options={ ({navigation}) => ({ 
                     title: 'Contact Us', 
                     headerLeft: () => <Icon name="menu" size={24} color= 'white'
                         onPress={ () => navigation.toggleDrawer() } />,                      
                 }) }
             />
-        </Stack.Navigator>
+        </ContactStack.Navigator>
     );
 }
 
 function ReservationNavigator(prop) {
     return (
-        <Stack.Navigator  screenOptions={{
+        <ReservationStack.Navigator  screenOptions={{
             headerStyle: {backgroundColor: '#512DA8'},
             headerTintColor: '#fff',
             headerTitleStyle: {color: '#fff'},
         }}>
-            <Stack.Screen name="Reservation" component={Reservation}
+            <ReservationStack.Screen name="Reservation" component={Reservation}
                 options={ ({navigation}) => ({ 
                     title: 'Reserve Table', 
                     headerLeft: () => <Icon name="menu" size={24} color= 'white'
                         onPress={ () => navigation.toggleDrawer() } />,                      
                 }) }
             />
-        </Stack.Navigator>
+        </ReservationStack.Navigator>
     );
 }
 
 function FavoritesNavigator(prop) {
     return (
-        <Stack.Navigator  screenOptions={{
+        <FavoritesStack.Navigator  screenOptions={{
             headerStyle: {backgroundColor: '#512DA8'},
             headerTintColor: '#fff',
             headerTitleStyle: {color: '#fff'},
         }}>
-            <Stack.Screen name="Favorites" component={Favorites}
+            <FavoritesStack.Screen name="Favorites" component={Favorites}
                 options={ ({navigation}) => ({ 
                     title: 'My Favorites', 
                     headerLeft: () => <Icon name="menu" size={24} color= 'white'
                         onPress={ () => navigation.toggleDrawer() } />,                      
                 }) }
             />
-        </Stack.Navigator>
+        </FavoritesStack.Navigator>
     );
 }
 
 function LoginNavigator(prop) {
     return (
-        <Stack.Navigator screenOptions={{
+        <LoginStack.Navigator screenOptions={{
             headerStyle: {backgroundColor: '#512DA8'},
             headerTintColor: '#fff',
             headerTitleStyle: {color: '#fff'},
         }}>
-            <Stack.Screen name="Login" component={Login}
+            <LoginStack.Screen name="Login" component={Login}
                 options={ ({navigation}) => ({ 
                     title: 'Login', 
                     headerLeft: () => <Icon name="menu" size={24} color= 'white'
                         onPress={ () => navigation.toggleDrawer() } />,                      
                 }) }
             />
-        </Stack.Navigator>
+        </LoginStack.Navigator>
     );
 }
 
@@ -212,7 +218,7 @@ class Main extends Component {
  
         return (
             <NavigationContainer>                
-                <Drawer.Navigator initialRouteName="Home" 
+                <Drawer.Navigator
                     drawerStyle={{backgroundColor: '#D1C4E9'}}
                     screenOptions={{ drawerBackgroundColor: '#D1C4E9'}}
                     drawerContent={props => <CustomDrawerContentComponent {...props} />} >
