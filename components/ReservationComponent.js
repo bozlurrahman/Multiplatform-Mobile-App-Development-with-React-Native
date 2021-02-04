@@ -5,6 +5,8 @@ import {Picker} from '@react-native-community/picker';
 // import DatePicker from 'react-native-datepicker'
 import RNDateTimePicker from '@react-native-community/datetimepicker'
 import * as Animatable from 'react-native-animatable';
+import * as Permissions from 'expo-permissions';
+import * as Notifications from 'expo-notifications';
 
 class Reservation extends Component {
 
@@ -41,6 +43,53 @@ class Reservation extends Component {
             showDatePicker: false,
             showModal: false
         });
+    }
+
+    async obtainNotificationPermission() {
+        let permission = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+        
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+            if (permission.status !== 'granted') {
+                Alert.alert('Permission not granted to show notifications');
+            }
+        }
+        return permission;
+    }
+
+    async presentLocalNotification(date) {
+        await this.obtainNotificationPermission();
+
+        Notifications.setNotificationHandler({
+            handleNotification: async () => ({
+              shouldShowAlert: true,
+              shouldPlaySound: true,
+              shouldSetBadge: false,
+            }),
+        });
+        
+        // due to depricated function presentLocalNotificationAsync, i use scheduleNotificationAsync function
+        Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'Your Reservation',
+                body: 'Reservation for '+ date + ' requested',
+                sound: true, // 'email-sound.wav', // <- for Android below 8.0
+                color: '#512DA8',
+                vibrate: true,
+            },
+            trigger: null,
+        });
+        // taken a short note for future use.
+        // Notifications.scheduleNotificationAsync({
+        //     content: {
+        //       title: 'Remember to drink water!',
+        //     },
+        //     trigger: {
+        //       seconds: 5,
+        //       repeats: true
+        //     },
+        // });
+
     }
 
     render() {
@@ -91,7 +140,10 @@ class Reservation extends Component {
                                     },
                                     {
                                         text: 'OK',
-                                        onPress: () => this.resetForm()
+                                        onPress: () => {
+                                            this.resetForm();
+                                            this.presentLocalNotification(this.state.date);
+                                        }
                                     }
                                 ],
                                 { cancelable: false }
