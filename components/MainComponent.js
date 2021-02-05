@@ -5,12 +5,13 @@
 // "react-native": "~0.63.4",
 // "react-native-elements": "^3.1.0",
 import React, { Component } from 'react';
-import { Button, Image, Text, View, Platform, TouchableOpacity, StyleSheet } from 'react-native';
+import { Button, Image, Text, View, Platform, TouchableOpacity, StyleSheet, ToastAndroid } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import Animated from 'react-native-reanimated';
 import { Icon } from 'react-native-elements';
+import NetInfo from "@react-native-community/netinfo";
 import Home from './HomeComponent';
 import About from './AboutComponent'
 import Menu from './MenuComponent';
@@ -212,6 +213,36 @@ class Main extends Component {
         this.props.fetchComments();
         this.props.fetchPromos();
         this.props.fetchLeaders();
+        
+        NetInfo.fetch().then(connectionInfo => {
+            console.log("Connection", connectionInfo);
+            ToastAndroid.show('Initial Network Connectivity Type: ' + connectionInfo.type, ToastAndroid.LONG)
+        });
+
+        const unsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
+    }
+    
+    componentWillUnmount() {
+        unsubscribe();
+    }
+
+    handleConnectivityChange = (connectionInfo) => {
+        switch (connectionInfo.type) {
+            case 'none':
+                ToastAndroid.show('You are now offline!', ToastAndroid.LONG);
+                break;
+            case 'wifi':
+                ToastAndroid.show('You are now connected to WiFi!', ToastAndroid.LONG);
+                break;
+            case 'cellular':
+                ToastAndroid.show('You are now connected to Cellular!', ToastAndroid.LONG);
+                break;
+            case 'unknown':
+                ToastAndroid.show('You now have unknown connection!', ToastAndroid.LONG);
+                break;
+            default:
+                break;
+        }
     }
 
     render() {
