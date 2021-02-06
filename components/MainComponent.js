@@ -216,14 +216,17 @@ class Main extends Component {
         
         NetInfo.fetch().then(connectionInfo => {
             console.log("Connection", connectionInfo);
-            ToastAndroid.show('Initial Network Connectivity Type: ' + connectionInfo.type, ToastAndroid.LONG)
+            if (Platform.OS === 'ios' || Platform.OS === 'android' )
+                ToastAndroid.show('Initial Network Connectivity Type: ' + connectionInfo.type, ToastAndroid.LONG)
         });
-
-        const unsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
+  
+        const unsubscribe = (Platform.OS === 'ios' || Platform.OS === 'android' ) ?
+                NetInfo.addEventListener(this.handleConnectivityChange) : (() => {});
+        
     }
     
     componentWillUnmount() {
-        unsubscribe();
+        (Platform.OS === 'ios' || Platform.OS === 'android' ) && this.unsubscribe();
     }
 
     handleConnectivityChange = (connectionInfo) => {
